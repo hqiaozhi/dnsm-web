@@ -1,0 +1,13 @@
+// 导入重置样式
+@use './reset.scss';
+
+// 导入变量（使用命名空间）
+@use './variables.scss' as vars;
+
+// 全局样式
+body {
+  font-family: vars.$font-family;
+  font-size: vars.$font-size-base;
+  color: vars.$text-color-primary;
+  background-color: vars.$bg-color;
+}
