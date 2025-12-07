@@ -298,9 +298,20 @@ async function handleSubmit() {
     }
     
     if (!isValid) return
-    
+    // 准备提交数据：将记录名称与域名组合成完整的记录全称
+    const submitData = {
+      ...domainForm,
+      records: domainForm.records.map(record => {
+        // 如果记录名称为@，则直接使用域名，否则组合成完整记录名
+        const fullRecordName = record.name === '@' ? domainForm.name : `${record.name}.${domainForm.name}`
+        return {
+          ...record,
+          name: fullRecordName
+        }
+      })
+    }
     // 提交数据
-    await createDNSDomain(domainForm)
+    await createDNSDomain(submitData)
     
     // 触发事件
     emit('domain-created')
